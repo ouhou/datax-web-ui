@@ -205,7 +205,12 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12" />
+          <!--     添加选择执行器   -->
+            <el-col :span="12">
+              <el-form-item label="executor">
+                  <el-input v-model="temp.executorHandler" placeholder="executorJobHandler/datawebhandler" />
+              </el-form-item>
+            </el-col>
         </el-row>
         <el-row v-if="temp.glueType==='BEAN'" :gutter="20">
           <el-col :span="12">
@@ -454,7 +459,7 @@ export default {
         // { value: 'SHARDING_BROADCAST', label: '分片广播' }
       ],
       glueTypes: [
-        { value: 'BEAN', label: 'DataX任务' },
+        { value: 'BEAN', label: 'BEAN任务' },
         { value: 'GLUE_SHELL', label: 'Shell任务' },
         { value: 'GLUE_PYTHON', label: 'Python任务' },
         { value: 'GLUE_POWERSHELL', label: 'PowerShell任务' }
@@ -575,7 +580,8 @@ export default {
           }
           this.temp.jobJson = this.jobJson
           this.temp.glueSource = this.glueSource
-          this.temp.executorHandler = this.temp.glueType === 'BEAN' ? 'executorJobHandler' : ''
+          // 修改 this.temp.executorHandler = this.temp.glueType === 'BEAN' ? 'executorJobHandler' : ''
+
           if (this.partitionField) this.temp.partitionInfo = this.partitionField + ',' + this.timeOffset + ',' + this.timeFormatType
           job.createJob(this.temp).then(() => {
             this.fetchData()
@@ -649,7 +655,8 @@ export default {
             }
             this.temp.childJobId = auth.toString()
           }
-          this.temp.executorHandler = this.temp.glueType === 'BEAN' ? 'executorJobHandler' : ''
+          // 修改
+
           this.temp.glueSource = this.glueSource
           if (this.partitionField) this.temp.partitionInfo = this.partitionField + ',' + this.timeOffset + ',' + this.timeFormatType
           job.updateJob(this.temp).then(() => {
